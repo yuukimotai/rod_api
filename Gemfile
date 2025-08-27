@@ -51,11 +51,3 @@ gem "argon2", "~> 2.3", require: false
 gem "jwt", "~> 2.9", require: false
 # Used by Rodauth for rendering built-in view and email templates
 gem "tilt", "~> 2.4", require: false
-# Enables Sequel to use Active Record's database connection
-gem "sequel-activerecord_connection", "~> 2.0", require: false
-# Used by Rodauth for password hashing
-gem "argon2", "~> 2.3", require: false
-# Used by Rodauth for JWT support
-gem "jwt", "~> 2.9", require: false
-# Used by Rodauth for rendering built-in view and email templates
-gem "tilt", "~> 2.4", require: false

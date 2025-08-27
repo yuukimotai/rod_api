@@ -5,7 +5,7 @@ class CreatePosts < ActiveRecord::Migration[7.2]
       t.bigint :post_number, null: false
       t.string :title, null: false
       t.text :content
-
+      t.text :priority_emoji
       t.timestamps
     end
   end

@@ -10,16 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_25_033918) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_26_062426) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
+
+  create_table "comments", force: :cascade do |t|
+    t.bigint "posts_id", null: false
+    t.string "emotions"
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["posts_id"], name: "index_comments_on_posts_id"
+  end
 
   create_table "posts", force: :cascade do |t|
     t.uuid "uuid", null: false
     t.bigint "post_number", null: false
     t.string "title", null: false
     t.text "content"
+    t.text "priority_emoji"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -51,6 +61,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_25_033918) do
     t.check_constraint "email ~ '^[^,;@ \r\n]+@[^,@; \r\n]+.[^,@; \r\n]+$'::citext", name: "valid_email"
   end
 
+  add_foreign_key "comments", "posts", column: "posts_id"
   add_foreign_key "user_login_change_keys", "users", column: "id"
   add_foreign_key "user_password_reset_keys", "users", column: "id"
   add_foreign_key "user_verification_keys", "users", column: "id"
