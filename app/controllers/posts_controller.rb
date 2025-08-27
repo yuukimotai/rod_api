@@ -3,7 +3,8 @@ class PostsController < ApplicationController
 
   # GET /posts
   def index
-    @posts = Post.all
+    @user = current_user
+    @posts = Post.where(uuid: @user.uuid)
 
     render json: @posts
   end
@@ -46,7 +47,8 @@ class PostsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
-      @post = Post.find(params[:id])
+      @user = current_user
+      @post = Post.where(uuid: @user.uuid).where(post_number: params[:id]).first
     end
 
     # Only allow a list of trusted parameters through.
