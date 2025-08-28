@@ -3,7 +3,11 @@
 one:
   title: MyString
   content: MyText
+  priority_emoji: MyString
+  user: one
 
 two:
   title: MyString
   content: MyText
+  priority_emoji: MyString
+  user: two

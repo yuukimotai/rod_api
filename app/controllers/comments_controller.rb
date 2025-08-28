@@ -15,7 +15,9 @@ class CommentsController < ApplicationController
 
   # POST /comments
   def create
-    @comment = Comment.new(comment_params)
+    @user = current_user
+    @post = @user.posts.find_by(id: comment_params[:post_id])
+    @comment = @post.comments.build(comment_params.merge(uuid: @user.uuid,parent_id: comment_params[:id]))
 
     if @comment.save
       render json: @comment, status: :created, location: @comment
@@ -46,6 +48,6 @@ class CommentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def comment_params
-      params.require(:comment).permit(:posts_id, :emotions, :content)
+      params.require(:comment).permit(:id, :title, :content, :emotions, :post_id, :parent_id)
     end
 end

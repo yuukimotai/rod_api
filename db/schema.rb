@@ -10,28 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_26_062426) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_28_021908) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
 
   create_table "comments", force: :cascade do |t|
-    t.bigint "posts_id", null: false
-    t.string "emotions"
+    t.uuid "uuid", null: false
+    t.string "title"
     t.text "content"
+    t.string "emotions"
+    t.bigint "post_id", null: false
+    t.bigint "parent_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["posts_id"], name: "index_comments_on_posts_id"
+    t.index ["parent_id"], name: "index_comments_on_parent_id"
+    t.index ["post_id"], name: "index_comments_on_post_id"
   end
 
   create_table "posts", force: :cascade do |t|
     t.uuid "uuid", null: false
-    t.bigint "post_number", null: false
-    t.string "title", null: false
+    t.integer "post_number", null: false
+    t.string "title"
     t.text "content"
-    t.text "priority_emoji"
+    t.string "priority_emoji"
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
   create_table "user_login_change_keys", force: :cascade do |t|
@@ -61,7 +67,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_26_062426) do
     t.check_constraint "email ~ '^[^,;@ \r\n]+@[^,@; \r\n]+.[^,@; \r\n]+$'::citext", name: "valid_email"
   end
 
-  add_foreign_key "comments", "posts", column: "posts_id"
+  add_foreign_key "comments", "comments", column: "parent_id"
+  add_foreign_key "comments", "posts"
+  add_foreign_key "posts", "users"
   add_foreign_key "user_login_change_keys", "users", column: "id"
   add_foreign_key "user_password_reset_keys", "users", column: "id"
   add_foreign_key "user_verification_keys", "users", column: "id"

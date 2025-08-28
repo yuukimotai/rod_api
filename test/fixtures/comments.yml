@@ -1,11 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  posts: one
-  emotions: MyString
+  title: MyString
   content: MyText
+  emotions: MyString
+  posts: one
 
 two:
-  posts: two
-  emotions: MyString
+  title: MyString
   content: MyText
+  emotions: MyString
+  posts: two
