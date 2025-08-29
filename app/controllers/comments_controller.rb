@@ -1,23 +1,33 @@
 class CommentsController < ApplicationController
-  before_action :set_comment, only: %i[ show update destroy ]
+  before_action :set_post, :set_comment, only: %i[ show update destroy ]
 
   # GET /comments
   def index
+    @user = current_user
     @comments = Comment.all
-
+  
     render json: @comments
   end
 
   # GET /comments/1
   def show
+    @comment = Comment.find(params[:id])
     render json: @comment
   end
 
   # POST /comments
   def create
     @user = current_user
-    @post = @user.posts.find_by(id: comment_params[:post_id])
-    @comment = @post.comments.build(comment_params.merge(uuid: @user.uuid,parent_id: comment_params[:id]))
+    @comment = Comment.new(comment_params)
+    @comment.uuid = @user.uuid
+    @comment.user = @user
+    @comment.post = @post
+
+    if comment_params[:post_id].present?
+      @comment.post_id = comment_params[:post_id]
+    else
+      @comment.parent_id = comment_params[:parent_id]
+    end
 
     if @comment.save
       render json: @comment, status: :created, location: @comment
@@ -42,12 +52,16 @@ class CommentsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def set_post
+      @post = Post.find(params[:post_id])
+    end
+    
     def set_comment
       @comment = Comment.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def comment_params
-      params.require(:comment).permit(:id, :title, :content, :emotions, :post_id, :parent_id)
+      params.require(:comment).permit(:uuid, :title, :content, :parent_id, :user_id, :post_id)
     end
 end

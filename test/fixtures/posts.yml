@@ -1,13 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  uuid: 
   title: MyString
   content: MyText
-  priority_emoji: MyString
   user: one
 
 two:
+  uuid: 
   title: MyString
   content: MyText
-  priority_emoji: MyString
   user: two

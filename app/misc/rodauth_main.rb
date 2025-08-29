@@ -39,6 +39,7 @@ class RodauthMain < Rodauth::Rails::Auth
     # Accept only JSON requests.
     enable :jwt
     only_json? true
+    jwt_payload do
 
     # Handle login and password confirmation fields on the client side.
     # require_password_confirmation? false
