@@ -137,5 +137,12 @@ class RodauthMain < Rodauth::Rails::Auth
     # verify_account_grace_period 3.days.to_i
     # reset_password_deadline_interval Hash[hours: 6]
     # verify_login_change_deadline_interval Hash[days: 2]
+    
+    # rod auth
+    enable :otp, :recovery_codes
+    # otp ログイン後のリダイレクトではエラーメッセージを表示しない
+    two_factor_need_authentication_error_flash { flash[:notice] == login_notice_flash ? nil : super() }
+    # 一般的な認証メッセージを表示する
+    two_factor_auth_notice_flash { login_notice_flash }
   end
 end

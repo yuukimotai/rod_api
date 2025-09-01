@@ -7,7 +7,6 @@ class RodauthApp < Rodauth::Rails::App
 
   route do |r|
     r.rodauth # route rodauth requests
-
     # ==> Authenticating requests
     # Call `rodauth.require_account` for requests that you want to
     # require authentication for. For example:
@@ -19,5 +18,8 @@ class RodauthApp < Rodauth::Rails::App
 
     # ==> Secondary configurations
     # r.rodauth(:admin) # route admin rodauth requests
+    if rodauth.uses_two_factor_authentication?
+      rodauth.require_two_factor_authenticated
+    end
   end
 end

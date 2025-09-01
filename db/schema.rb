@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_29_013320) do
+ActiveRecord::Schema[7.2].define(version: 2025_09_01_042201) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
+
+  create_table "account_otp_keys", force: :cascade do |t|
+    t.string "key", null: false
+    t.integer "num_failures", default: 0, null: false
+    t.datetime "last_use", default: -> { "CURRENT_TIMESTAMP" }, null: false
+  end
+
+  create_table "account_recovery_codes", primary_key: ["id", "code"], force: :cascade do |t|
+    t.bigint "id", null: false
+    t.string "code", null: false
+  end
 
   create_table "comments", force: :cascade do |t|
     t.uuid "uuid"
@@ -67,6 +78,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_29_013320) do
     t.check_constraint "email ~ '^[^,;@ \r\n]+@[^,@; \r\n]+.[^,@; \r\n]+$'::citext", name: "valid_email"
   end
 
+  add_foreign_key "account_otp_keys", "users", column: "id"
+  add_foreign_key "account_recovery_codes", "users", column: "id"
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
   add_foreign_key "posts", "users"

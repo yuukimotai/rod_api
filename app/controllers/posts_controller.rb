@@ -1,9 +1,9 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[ show update destroy ]
-
   # GET /posts
   def index
-    @posts = Post.all
+    @user = current_user
+    @posts = Post.where(uuid: @user.uuid)
 
     render json: @posts
   end
@@ -29,6 +29,7 @@ class PostsController < ApplicationController
 
   # PATCH/PUT /posts/1
   def update
+    @user = current_user
     if @post.update(post_params)
       render json: @post
     else
