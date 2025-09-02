@@ -6,7 +6,7 @@ class RodauthMain < Rodauth::Rails::Auth
     enable :create_account, :verify_account, :verify_account_grace_period,
       :login, :logout, :jwt,
       :reset_password, :change_password, :change_login, :verify_login_change,
-      :close_account, :argon2
+      :close_account, :argon2, :otp
 
     # See the Rodauth documentation for the list of available config options:
     # http://rodauth.jeremyevans.net/documentation.html
@@ -140,9 +140,15 @@ class RodauthMain < Rodauth::Rails::Auth
     
     # rod auth
     enable :otp, :recovery_codes
-    # otp ログイン後のリダイレクトではエラーメッセージを表示しない
-    two_factor_need_authentication_error_flash { flash[:notice] == login_notice_flash ? nil : super() }
-    # 一般的な認証メッセージを表示する
-    two_factor_auth_notice_flash { login_notice_flash }
+        # 最初の多要素認証方法が有効になったら自動的にリカバリーコードを生成する
+    auto_add_recovery_codes? true
+    # 最後の多要素認証方法が無効になったら自動的にリカバリーコードを削除する
+    auto_remove_recovery_codes? true
+    # TOTPセットアップ後にリカバリーコードを表示する
+    after_otp_setup do
+      json_response[json_response_success_key] = "TOTP setup complete. Please save your recovery codes."
+      json_response[:recovery_codes] = recovery_codes
+      return_response json_response
+    end
   end
 end
