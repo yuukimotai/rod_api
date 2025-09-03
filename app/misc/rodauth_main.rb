@@ -146,7 +146,7 @@ class RodauthMain < Rodauth::Rails::Auth
     auto_remove_recovery_codes? true
     # TOTPセットアップ後にリカバリーコードを表示する
     after_otp_setup do
-      json_response[json_response_success_key] = "TOTP setup complete. Please save your recovery codes."
+      json_response[json_response_success_key] = "TOTPの設定が完了しました。以下はリカバリーコードです。必ず保存してください。"
       json_response[:recovery_codes] = recovery_codes
       return_response json_response
     end
