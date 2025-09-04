@@ -51,6 +51,6 @@ gem "argon2", "~> 2.3", require: false
 gem "jwt", "~> 2.9", require: false
 # Used by Rodauth for rendering built-in view and email templates
 gem "tilt", "~> 2.4", require: false
-
 gem "rotp", "~> 6.3"
 gem "rqrcode", "~> 3.1"
+gem "rack-cors", "~> 3.0"
