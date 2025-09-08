@@ -3,7 +3,7 @@ class PostsController < ApplicationController
   # GET /posts
   def index
     @user = current_user
-    @posts = Post.where(uuid: @user.uuid)
+    @posts = Post.order(updated_at: :desc).limit(100)
 
     render json: @posts
   end
@@ -50,6 +50,6 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:uuid, :title, :content, :user_id)
+      params.require(:post).permit(:user_id, :uuid, :title, :content, :priority_emoji)
     end
 end
