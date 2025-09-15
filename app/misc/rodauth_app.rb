@@ -13,6 +13,7 @@ class RodauthApp < Rodauth::Rails::App
     if r.path.start_with?("/comments")
       rodauth.require_authentication
     end
+
     # ==> Authenticating requests
     # Call `rodauth.require_account` for requests that you want to
     # require authentication for. For example:
