@@ -3,7 +3,8 @@ class PostsController < ApplicationController
   # GET /posts
   def index
     @user = current_user
-    @posts = Post.order(updated_at: :desc).limit(100)
+    @posts = Post.where(uuid: current_user.uuid)
+                 .order(updated_at: :desc).limit(100)
 
     render json: @posts
   end
