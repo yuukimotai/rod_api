@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::API
-  after_action :set_jwt_token
-
   private
+  after_action :set_jwt_token
 
   def set_jwt_token
     if rodauth.use_jwt? && rodauth.valid_jwt?
