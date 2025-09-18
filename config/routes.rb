@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
+  resources :posts
   resources :comments
-  resources :posts do
+  resources :searchposts do
     collection do
-      get :search_by_content
-      get :search_by_username
+      get "by-content", to: "searchposts#search_by_content"
+      get "search-username", to: "searchposts#search_by_username"
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
