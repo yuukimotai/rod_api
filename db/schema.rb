@@ -45,6 +45,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_01_042201) do
     t.string "title", null: false
     t.text "content", null: false
     t.text "priority_emoji"
+    t.boolean "is_public", default: false, null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
