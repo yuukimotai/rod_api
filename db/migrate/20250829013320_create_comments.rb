@@ -6,7 +6,7 @@ class CreateComments < ActiveRecord::Migration[7.2]
       t.string :emotions
       t.integer :parent_id, index: true
       t.references :user, null: false, foreign_key: true
-      t.references :post, null: false, foreign_key: true
+      t.references :idea, null: false, foreign_key: true
 
       t.timestamps
     end

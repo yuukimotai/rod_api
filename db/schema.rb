@@ -32,15 +32,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_01_042201) do
     t.string "emotions"
     t.integer "parent_id"
     t.bigint "user_id", null: false
-    t.bigint "post_id", null: false
+    t.bigint "idea_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["idea_id"], name: "index_comments_on_idea_id"
     t.index ["parent_id"], name: "index_comments_on_parent_id"
-    t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "posts", force: :cascade do |t|
+  create_table "ideas", force: :cascade do |t|
     t.uuid "uuid", null: false
     t.string "title", null: false
     t.text "content", null: false
@@ -49,7 +49,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_01_042201) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_posts_on_user_id"
+    t.index ["user_id"], name: "index_ideas_on_user_id"
   end
 
   create_table "user_login_change_keys", force: :cascade do |t|
@@ -81,9 +81,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_01_042201) do
 
   add_foreign_key "account_otp_keys", "users", column: "id"
   add_foreign_key "account_recovery_codes", "users", column: "id"
-  add_foreign_key "comments", "posts"
+  add_foreign_key "comments", "ideas"
   add_foreign_key "comments", "users"
-  add_foreign_key "posts", "users"
+  add_foreign_key "ideas", "users"
   add_foreign_key "user_login_change_keys", "users", column: "id"
   add_foreign_key "user_password_reset_keys", "users", column: "id"
   add_foreign_key "user_verification_keys", "users", column: "id"

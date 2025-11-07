@@ -1,6 +1,6 @@
-class CreatePosts < ActiveRecord::Migration[7.2]
+class CreateIdeas < ActiveRecord::Migration[7.2]
   def change
-    create_table :posts do |t|
+    create_table :ideas do |t|
       t.uuid :uuid, null: false
       t.string :title, null: false
       t.text :content, null: false
