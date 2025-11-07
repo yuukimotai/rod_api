@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 gem "dotenv"
 gem "rodauth-rails"
+gem "rodauth-model"
 gem "debug"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.2.2", ">= 7.2.2.2"
@@ -47,6 +48,7 @@ end
 # Enables Sequel to use Active Record's database connection
 gem "sequel-activerecord_connection", "~> 2.0", require: false
 # Used by Rodauth for password hashing
+gem "bcrypt"
 gem "argon2", "~> 2.3", require: false
 # Used by Rodauth for JWT support
 gem "jwt", "~> 2.9", require: false
@@ -55,3 +57,4 @@ gem "tilt", "~> 2.4", require: false
 gem "rotp", "~> 6.3"
 gem "rqrcode", "~> 3.1"
 gem "rack-cors", "~> 3.0"
+gem "pundit"

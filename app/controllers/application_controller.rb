@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::API
   private
+  include Pundit
   after_action :set_jwt_token
 
   def set_jwt_token
@@ -15,5 +16,8 @@ class ApplicationController < ActionController::API
   end
   def current_user
     rodauth.rails_account
+  end
+  def current_admin
+    rodauth.rails_account if rodauth.admin_logged_in?
   end
 end

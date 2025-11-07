@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_01_042201) do
+ActiveRecord::Schema[7.2].define(version: 2025_11_07_052444) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -24,6 +24,15 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_01_042201) do
   create_table "account_recovery_codes", primary_key: ["id", "code"], force: :cascade do |t|
     t.bigint "id", null: false
     t.string "code", null: false
+  end
+
+  create_table "admins", force: :cascade do |t|
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
+    t.citext "email", null: false
+    t.string "password_hash"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.check_constraint "email ~ '^[^,;@ \r\n]+@[^,@; \r\n]+.[^,@; \r\n]+$'::citext", name: "valid_email"
   end
 
   create_table "comments", force: :cascade do |t|

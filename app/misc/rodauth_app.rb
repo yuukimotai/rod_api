@@ -1,12 +1,16 @@
 class RodauthApp < Rodauth::Rails::App
   # primary configuration
   configure RodauthMain
-
   # secondary configuration
-  # configure RodauthAdmin, :admin
+  configure RodauthAdmin, :admin
 
   route do |r|
-    r.rodauth # route rodauth requests
+    r.rodauth # route rodauth requests]
+    r.rodauth(:admin) # route secondary rodauth requests
+
+    if request.path.start_with?("/admin")
+      rodauth(:admin).require_account
+    end
     if r.path.start_with?("/posts")
       rodauth.require_authentication
     end
