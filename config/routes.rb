@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :posts
+  resources :ideas
   resources :comments
   resources :searchposts do
     collection do
