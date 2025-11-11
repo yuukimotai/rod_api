@@ -1,7 +1,7 @@
 class CreateIdeas < ActiveRecord::Migration[7.2]
   def change
     create_table :ideas do |t|
-      t.uuid :uuid, null: false
+      t.uuid :user_uuid, null: false
       t.string :title, null: false
       t.text :content, null: false
       t.text :priority_emoji

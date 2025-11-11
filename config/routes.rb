@@ -1,11 +1,15 @@
 Rails.application.routes.draw do
   resources :ideas
   resources :comments
+  
   resources :searchposts do
     collection do
       get "by-content", to: "searchposts#search_by_content"
       get "search-username", to: "searchposts#search_by_username"
     end
+  end
+  namespace :shared do
+    resources :ideas, only: [:index, :show]
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

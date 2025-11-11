@@ -1,9 +1,10 @@
 class IdeasController < ApplicationController
+  before_action :authenticate
   before_action :set_idea, only: %i[ show update destroy ]
   # GET /ideas
   def index
     @user = current_user
-    @ideas = Idea.where(uuid: current_user.uuid)
+    @ideas = Idea.where(user_uuid: current_user.uuid)
                  .order(updated_at: :desc).limit(100)
 
     render json: @ideas
@@ -18,7 +19,7 @@ class IdeasController < ApplicationController
   def create
     @user = current_user
     @idea = Idea.new(idea_params)
-    @idea.uuid = @user.uuid
+    @idea.user_uuid = @user.uuid
     @idea.user = @user
 
     if @idea.save

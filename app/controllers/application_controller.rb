@@ -14,6 +14,9 @@ class ApplicationController < ActionController::API
       # }
     end
   end
+  def authenticate
+    rodauth.require_account # redirect to login page if not authenticated
+  end
   def current_user
     rodauth.rails_account
   end

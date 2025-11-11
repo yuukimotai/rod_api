@@ -11,7 +11,10 @@ class RodauthApp < Rodauth::Rails::App
     if request.path.start_with?("/admin")
       rodauth(:admin).require_account
     end
-    if r.path.start_with?("/posts")
+    if r.path.start_with?("/ideas")
+      rodauth.require_authentication
+    end
+    if r.path.start_with?("/shared/ideas")
       rodauth.require_authentication
     end
     if r.path.start_with?("/comments")

@@ -4,8 +4,8 @@ class CommentsController < ApplicationController
   # GET /comments
   def index
     @user = current_user
-    @comments = Comment.all
-  
+    @comments = Comment.where(user_uuid: current_user.uuid)
+                       .order(updated_at: :desc).limit(100)
     render json: @comments
   end
 
@@ -19,7 +19,7 @@ class CommentsController < ApplicationController
   def create
     @user = current_user
     @comment = Comment.new(comment_params)
-    @comment.uuid = @user.uuid
+    @comment.user_uuid = @user.uuid
     @comment.user = @user
     @comment.post = @post
 

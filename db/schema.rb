@@ -50,7 +50,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_07_052444) do
   end
 
   create_table "ideas", force: :cascade do |t|
-    t.uuid "uuid", null: false
+    t.uuid "user_uuid", null: false
     t.string "title", null: false
     t.text "content", null: false
     t.text "priority_emoji"
@@ -59,6 +59,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_07_052444) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_ideas_on_user_id"
+    t.index ["user_uuid"], name: "index_ideas_on_user_uuid"
   end
 
   create_table "user_login_change_keys", force: :cascade do |t|
