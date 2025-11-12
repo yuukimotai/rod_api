@@ -1,10 +1,11 @@
 class CommentsController < ApplicationController
-  before_action :set_post, :set_comment, only: %i[ show update destroy ]
+  before_action :set_idea, only: %i[ index show create update destroy ]
 
   # GET /comments
   def index
-    @user = current_user
-    @comments = Comment.where(user_uuid: current_user.uuid)
+    @user = current_user# current_userのチェック必要
+
+    @comments = Comment.where(idea_id: @idea.id)
                        .order(updated_at: :desc).limit(100)
     render json: @comments
   end
@@ -19,14 +20,14 @@ class CommentsController < ApplicationController
   def create
     @user = current_user
     @comment = Comment.new(comment_params)
-    @comment.user_uuid = @user.uuid
+    @comment.uuid = @user.uuid
     @comment.user = @user
-    @comment.post = @post
+    @comment.idea = @idea
 
-    if comment_params[:post_id].present?
-      @comment.post_id = comment_params[:post_id]
-    else
+    if comment_params[:idea_id].present?
       @comment.parent_id = comment_params[:parent_id]
+    else
+      @comment.idea_id = @idea.id
     end
 
     if @comment.save
@@ -52,10 +53,10 @@ class CommentsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_post
-      @post = Post.find(params[:post_id])
+    def set_idea
+      @idea = Idea.find_by(id: params[:idea_id])
     end
-    
+
     def set_comment
       @comment = Comment.find(params[:id])
     end
