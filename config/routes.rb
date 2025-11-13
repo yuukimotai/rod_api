@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
+  namespace :shared do
+    resources :ideas, only: [:index, :show]
+  end
   resources :ideas
   resources :comments
+  resources :my_comments, only: [:index, :update, :destroy]
   
   resources :searchposts do
     collection do
@@ -8,9 +12,7 @@ Rails.application.routes.draw do
       get "search-username", to: "searchposts#search_by_username"
     end
   end
-  namespace :shared do
-    resources :ideas, only: [:index, :show]
-  end
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
