@@ -1,4 +1,6 @@
 class MyCommentsController < ApplicationController
+  before_action :set_comment, only: %i[ update destroy ]
+
   def index
     @user = current_user# current_userのチェック必要
     @comments = Comment.where(uuid: @user.uuid)
@@ -33,6 +35,6 @@ class MyCommentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def comment_params
-      params.require(:comment).permit(:uuid, :title, :content, :parent_id, :user_id, :post_id)
+      params.require(:my_comment).permit( :id, :content, :emotions)
     end
 end

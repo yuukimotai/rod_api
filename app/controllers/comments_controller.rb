@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :set_idea, only: %i[ index show create update destroy ]
+  before_action :set_idea, only: %i[ index create ]
 
   # GET /comments
   def index
@@ -34,7 +34,6 @@ class CommentsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_idea
-      print(params[:idea_id])
       @idea = Idea.find_by(id: params[:idea_id])
     end
 
@@ -44,6 +43,6 @@ class CommentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def comment_params
-      params.require(:comment).permit(:uuid, :title, :content, :parent_id, :user_id, :post_id)
+      params.require(:comment).permit(:uuid, :content, :parent_id, :user_id, :post_id)
     end
 end
